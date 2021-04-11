@@ -1,3 +1,6 @@
 test-network/.DS_Store
 contract-search/go.sum
+contract-search/vendor/
 test-network/.gitignore
+Search_Apps/node_modules/
+Search_Apps/website/node_modules

@@ -3,13 +3,14 @@
 const { Gateway, Wallets } = require('fabric-network');
 const FabricCAServices = require('fabric-ca-client');
 const path = require('path');
-const { buildCAClient, registerAndEnrollUser, enrollAdmin } = require('../test-application/javascript/CAUtil.js');
-const { buildCCPOrg1, buildWallet } = require('../test-application/javascript/AppUtil.js');
+const { buildCAClient, registerAndEnrollUser, enrollAdmin } = require('../../test-application/javascript/CAUtil.js');
+const { buildCCPOrg1, buildWallet } = require('../../test-application/javascript/AppUtil.js');
 const IPFS = require('ipfs-core')
 const prompt = require('prompt-sync')({sigint: true});
 const extractor = require('unfluff');
 const request = require('request');
 const countWords = require("count-words");
+const homedir = require('os').homedir();
 // const console = require('node:console');
 
 
@@ -42,9 +43,9 @@ async function readFileFromIpfs(cid) {
 	}
 }
 
-async function main() {
+async function myFunctionCrawl(url) {
 	ipfs = await IPFS.create({
-		repo: "~/IPFS/data/"
+		repo: path.join(homedir, "/IPFS/data/")
 	})
 	try {
 		// build an in memory object with the network configuration (also known as a connection profile)
@@ -89,11 +90,10 @@ async function main() {
 			// const result = await smartContract.submitTransaction('ReadWord', 'word100')
 			// console.log('*** Result: committed ', result.toString());
 			
-			var cont = true;
-			// while(cont) {
-				cont = await foo()
-				console.log(cont)
-			// }
+			
+		
+				return await foo(url)
+				
 		
 		} finally {
 			// Disconnect from the gateway when the application is closing
@@ -110,9 +110,7 @@ async function main() {
 }
 
 
-async function foo() {
-    const url = prompt('Enter next URL to crawl: ');
-    console.log('Url entered', url);
+async function foo(url) {
     
     request(url, async function(error, response, body) {
         if(error) {
@@ -184,6 +182,7 @@ async function foo() {
 			  }
             console.log('Website crawled sucessfully');
 			ipfs.stop();
+			return "Crawling Sucessfull"
 			// gateway.disconnect()
         }
 	})
@@ -191,4 +190,4 @@ async function foo() {
 	
 }
 
-main(); 
+module.exports.myFunctionCrawl = myFunctionCrawl

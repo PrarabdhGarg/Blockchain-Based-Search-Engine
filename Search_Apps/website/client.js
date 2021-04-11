@@ -3,8 +3,8 @@
 const { Gateway, Wallets } = require('fabric-network');
 const FabricCAServices = require('fabric-ca-client');
 const path = require('path');
-const { buildCAClient, registerAndEnrollUser, enrollAdmin } = require('../test-application/javascript/CAUtil.js');
-const { buildCCPOrg1, buildWallet } = require('../test-application/javascript/AppUtil.js');
+const { buildCAClient, registerAndEnrollUser, enrollAdmin } = require('../../test-application/javascript/CAUtil.js');
+const { buildCCPOrg1, buildWallet } = require('../../test-application/javascript/AppUtil.js');
 const prompt = require('prompt-sync')({sigint: true});
 
 
@@ -16,7 +16,8 @@ const org1UserId = 'appUserClient';
 var smartContract = null
 var ipfs = null
 
-async function main() {
+async function myFunction(text) {
+	// alert('Hello')
 	// ipfs = await IPFS.create()
 	try {
 		// build an in memory object with the network configuration (also known as a connection profile)
@@ -63,7 +64,7 @@ async function main() {
 			var cont = true;
 			// while(cont) {
 				// console.log("Here")
-				cont = await foo()
+				return await foo(text)
 			// }
 		
 		} finally {
@@ -81,17 +82,13 @@ async function main() {
 }
 
 
-async function foo() {
-    const searchWord = prompt('Enter search term: ');
-    console.log('Search term entered', searchWord);
+async function foo(text) {
+    // const searchWord = prompt('Enter search term: ');
+    // console.log('Search term entered', searchWord);
 
-    var result = await smartContract.submitTransaction('Lookup', searchWord.toString())
+    var result = await smartContract.submitTransaction('Lookup', text.toString())
     console.log('Result from smart contract = ' + result.toString())
-
-	const cont = prompt('Continue?')
-	if(cont === 'y')
-		return true;
-	return false;
+	return result
 }
 
-main();
+module.exports.myFunction = myFunction
