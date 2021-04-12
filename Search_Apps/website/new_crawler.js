@@ -8,7 +8,7 @@ const { buildCCPOrg1, buildWallet } = require('../../test-application/javascript
 const IPFS = require('ipfs-core')
 const prompt = require('prompt-sync')({sigint: true});
 const extractor = require('unfluff');
-const request = require('request');
+const axios = require('axios').default;
 const countWords = require("count-words");
 const homedir = require('os').homedir();
 // const console = require('node:console');
@@ -92,7 +92,9 @@ async function myFunctionCrawl(url) {
 			
 			
 		
-				return await foo(url)
+			var res =  await foo(url)
+			console.log("Result = " + res)
+			return res
 				
 		
 		} finally {
@@ -111,12 +113,15 @@ async function myFunctionCrawl(url) {
 
 
 async function foo(url) {
+
+	const response = await axios.get(url);
+	console.log(response)
+	var body = response.data;
+	console.log("Body = " + body)
     
-    request(url, async function(error, response, body) {
-        if(error) {
-			console.error('error:', error);
-			// console.log('error:', error);
-        } else {
+    
+        
+        
 			var data = extractor(body);
 			console.log(data.text)
 			// var words = countWords(data.text);
@@ -184,8 +189,6 @@ async function foo(url) {
 			ipfs.stop();
 			return "Crawling Sucessfull"
 			// gateway.disconnect()
-        }
-	})
 	
 	
 }

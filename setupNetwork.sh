@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if ! [[ -d ./bin ]]
+then
+    echo "Installing Hyperledger Fabric binaries..."
+    ./bootstrap.sh -s -d
+fi
 docker container kill ipfs_host
 docker container rm ipfs_host
 cd ./test-network
@@ -37,8 +42,8 @@ peer lifecycle chaincode checkcommitreadiness --channelID mychannel --name basic
 peer lifecycle chaincode commit -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --channelID mychannel --name basic --version 1.0 --sequence 1 --tls --cafile "${PWD}"/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem --peerAddresses localhost:7051 --tlsRootCertFiles "${PWD}"/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --peerAddresses localhost:9051 --tlsRootCertFiles "${PWD}"/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt
 peer lifecycle chaincode querycommitted --channelID mychannel --name basic --cafile "${PWD}"/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile "${PWD}"/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C mychannel -n basic --peerAddresses localhost:7051 --tlsRootCertFiles "${PWD}"/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --peerAddresses localhost:9051 --tlsRootCertFiles "${PWD}"/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt -c '{"function":"InitLedger","Args":[]}'
-rm -rf ../Search_Apps/wallet/
-rm -rf ../Search_Apps/wallet1/
+rm -rf ../Search_Apps/website/wallet/
+rm -rf ../Search_Apps/website/wallet1/
 export ipfs_staging=~/IPFS/staging/
 export ipfs_data=~/IPFS/data/
 docker run -d --name ipfs_host  -v "$ipfs_staging":/export -v "$ipfs_data":/data/ipfs -p 4001:4001 -p 4001:4001/udp -p 8080:8080 -p 5001:5001 ipfs/go-ipfs:latest
