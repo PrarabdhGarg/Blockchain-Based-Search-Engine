@@ -114,81 +114,95 @@ async function myFunctionCrawl(url) {
 
 async function foo(url) {
 
+	var startTime = process.hrtime()
 	const response = await axios.get(url);
-	console.log(response)
+	// console.log(response)
 	var body = response.data;
-	console.log("Body = " + body)
-    
-    
+	// console.log("Body = " + body)
         
-        
-			var data = extractor(body);
-			console.log(data.text)
-			// var words = countWords(data.text);
-			var words = countWords(data.text.toLowerCase(), true);
-			console.log(words)
-			// words.forEach(async (key, value) => {
-			// 	var isNew = false;
-			// 	const result = await contract.submitTransaction('ReadWord', key)
-			// 	console.log('File id for word ' + key.toString() + ' = ' + result.toString())
-			// 	var fileContents = await readFileFromIpfs(result.toString())
-			// 	if(fileContents == '') 
-			// 		isNew = true
-			// 	console.log('Old File contents = ' + fileContents)
-			// 	fileContents = fileContents + url + '\t' + value.toString() + '\n'
-			// 	console.log('New File contents = ' + fileContents)
-			// 	const { newPath } = await ipfs.add(fileContents)
-			// 	console.log('New Path = ' + newPath)
-			// 	if(isNew) {
-			// 		const result = await contract.submitTransaction('CreateWord', key, newPath)
-			// 		console.log('Result of CreateWord = ' + result.toString())
-			// 	} else {
-			// 		const result = await contract.submitTransaction('UpdateWord', key, newPath)
-			// 		console.log('Result of UpdateWord = ' + result.toString())
-			// 	}
-			// }
+	var data = extractor(body);
+	// console.log(data.text)
+	// var words = countWords(data.text);
+	var words = countWords(data.text.toLowerCase(), true);
+	// console.log(words)
+	// words.forEach(async (key, value) => {
+	// 	var isNew = false;
+	// 	const result = await contract.submitTransaction('ReadWord', key)
+	// 	console.log('File id for word ' + key.toString() + ' = ' + result.toString())
+	// 	var fileContents = await readFileFromIpfs(result.toString())
+	// 	if(fileContents == '') 
+	// 		isNew = true
+	// 	console.log('Old File contents = ' + fileContents)
+	// 	fileContents = fileContents + url + '\t' + value.toString() + '\n'
+	// 	console.log('New File contents = ' + fileContents)
+	// 	const { newPath } = await ipfs.add(fileContents)
+	// 	console.log('New Path = ' + newPath)
+	// 	if(isNew) {
+	// 		const result = await contract.submitTransaction('CreateWord', key, newPath)
+	// 		console.log('Result of CreateWord = ' + result.toString())
+	// 	} else {
+	// 		const result = await contract.submitTransaction('UpdateWord', key, newPath)
+	// 		console.log('Result of UpdateWord = ' + result.toString())
+	// 	}
+	// }
+
+	var commonWords = ['the', 'of', 'a', 'and', 'to', 'in', 'is', 'you', 'that', 'it', 'he', 'was', 'for', 'on', 'are', 'as',
+					   'with', 'his', 'they', 'i', 'at', 'be', 'this', 'have', 'from', 'or', 'one', 'had', 'by', 'word', 'but',
+					   'not', 'what', 'all', 'were', 'we', 'when', 'your', 'can', 'said', 'there', 'use', 'an', 'each', 'which',
+					   'she', 'do', 'how', 'their', 'if', 'will', 'up', 'other', 'about', 'out', 'many', 'then', 'them', 'these',
+					   'so', 'some', 'her', 'would', 'make', 'like', 'him', 'into', 'time', 'has', 'look', 'two', 'more', 'write',
+					   'go', 'see', 'no', 'way', 'could', 'my', 'then', 'been', 'call', 'who', 'its', 'now', 'did', 'get', 'come']
+	var useful = 0;
+	
+	for (var key in words){
+		if(commonWords.includes(key.toLowerCase())) {
+			continue;
+		} else {
+			useful++;
+			console.log( key, words[key] );
+			var value = words[key];
+			var isNew = false;
 			
-			for (var key in words){
-				console.log( key, words[key] );
-				var value = words[key];
-				var isNew = false;
-				
-				var result
-				result = await smartContract.submitTransaction('ReadWord', key.toString())
+			var result
+			result = await smartContract.submitTransaction('ReadWord', key.toString())
 
-				console.log(result.toString())
+			console.log(result.toString())
 
-				if(!result.toString()) {
-					result = ''
-					isNew = true
-				}
-				var fileContents = ''
-				console.log("isNew = " + isNew)
-				if(!isNew) {
-					console.log('File id for word ' + key.toString() + ' = ' + JSON.parse(result.toString()).path)
-					fileContents = await readFileFromIpfs(JSON.parse(result.toString()).path)
-				}
-				
-				// if(fileContents == '') 
-					// isNew = true
-				// fileContents = fileContents.substring(0, fileContents.length - 1)
-				console.log('Old File contents = ' + fileContents)
-				fileContents = fileContents + url + '\t' + value.toString() + '\n'
-				console.log('New File contents = ' + fileContents)
-				const { cid } = await ipfs.add(fileContents)
-				console.log('New Path = ' + cid)
-				if(isNew) {
-					const result = await smartContract.submitTransaction('CreateWord', key, cid)
-					console.log('Result of CreateWord = ' + result.toString())
-				} else {
-					const result = await smartContract.submitTransaction('UpdateWord', key, cid)
-					console.log('Result of UpdateWord = ' + result.toString())
+			if(!result.toString()) {
+				result = ''
+				isNew = true
 			}
-			  }
-            console.log('Website crawled sucessfully');
-			ipfs.stop();
-			return "Crawling Sucessfull"
-			// gateway.disconnect()
+			var fileContents = ''
+			console.log("isNew = " + isNew)
+			if(!isNew) {
+				console.log('File id for word ' + key.toString() + ' = ' + JSON.parse(result.toString()).path)
+				fileContents = await readFileFromIpfs(JSON.parse(result.toString()).path)
+			}
+			
+			// if(fileContents == '') 
+				// isNew = true
+			// fileContents = fileContents.substring(0, fileContents.length - 1)
+			console.log('Old File contents = ' + fileContents)
+			fileContents = fileContents + url + '\t' + value.toString() + '\n'
+			console.log('New File contents = ' + fileContents)
+			const { cid } = await ipfs.add(fileContents)
+			console.log('New Path = ' + cid)
+			if(isNew) {
+				const result = await smartContract.submitTransaction('CreateWord', key, cid)
+				console.log('Result of CreateWord = ' + result.toString())
+			} else {
+				const result = await smartContract.submitTransaction('UpdateWord', key, cid)
+				console.log('Result of UpdateWord = ' + result.toString())
+			}
+		}
+	}
+	var endTime = process.hrtime(startTime)
+	console.log('Website crawled sucessfully in %ds %dms', endTime[0], endTime[1]/1000000);
+	console.log('Words = %d', Object.keys(words).length)
+	console.log('Useful = %d', useful)
+	ipfs.stop();
+	return "Website crawlled sucessfully"
+	// gateway.disconnect()
 	
 	
 }

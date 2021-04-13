@@ -18,10 +18,9 @@ function search(text) {
         console.log(sortedArray)
         ul = $("<ul>")
         for (let x of sortedArray) {
-            $.get(x[1], function(data) {
+            
                 ul.append("<li><a href='" + x[1] + "'>" + x[1] + "</a></li>")
                 console.log("X = " + x[1])
-            })
             
         }
         $('#results').empty()

@@ -85,9 +85,11 @@ async function myFunction(text) {
 async function foo(text) {
     // const searchWord = prompt('Enter search term: ');
     // console.log('Search term entered', searchWord);
-
+	var startTime = process.hrtime()
     var result = await smartContract.submitTransaction('Lookup', text.toString())
     console.log('Result from smart contract = ' + result.toString())
+	var endTime = process.hrtime(startTime)
+	console.log('Search results returned in %ds %dms', endTime[0], endTime[1]/1000000);
 	return result
 }
 
