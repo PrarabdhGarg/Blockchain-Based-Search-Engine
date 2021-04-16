@@ -200,8 +200,8 @@ async function foo(url) {
 	console.log('Website crawled sucessfully in %ds %dms', endTime[0], endTime[1]/1000000);
 	console.log('Words = %d', Object.keys(words).length)
 	console.log('Useful = %d', useful)
-	ipfs.stop();
-	return "Website crawlled sucessfully"
+	// ipfs.stop();
+	return "Website crawled sucessfully"
 	// gateway.disconnect()
 	
 	

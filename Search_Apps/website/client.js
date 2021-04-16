@@ -6,6 +6,7 @@ const path = require('path');
 const { buildCAClient, registerAndEnrollUser, enrollAdmin } = require('../../test-application/javascript/CAUtil.js');
 const { buildCCPOrg1, buildWallet } = require('../../test-application/javascript/AppUtil.js');
 const prompt = require('prompt-sync')({sigint: true});
+const axios = require('axios').default;
 
 
 const channelName = 'mychannel';
@@ -81,6 +82,18 @@ async function myFunction(text) {
     
 }
 
+function sortByValue(jsObj){
+    var sortedArray = [];
+    for(var i in jsObj)
+    {
+        console.log(i)
+        console.log(jsObj[i])
+        // Push each JSON Object entry in array by [value, key]
+        sortedArray.push([Number(jsObj[i]), i]);
+    }
+    return sortedArray.sort();
+}
+
 
 async function foo(text) {
     // const searchWord = prompt('Enter search term: ');
@@ -88,9 +101,26 @@ async function foo(text) {
 	var startTime = process.hrtime()
     var result = await smartContract.submitTransaction('Lookup', text.toString())
     console.log('Result from smart contract = ' + result.toString())
+	result = JSON.parse(result.toString())
+	var sortedArray = sortByValue(result)
+	var returnValue = {}
+	console.log('SortedArray = ' + sortedArray)
+	for(let x of sortedArray) {
+		console.log("Url = " + x[1].toString())
+		var response = await axios.get(x[1].toString());
+		var body = response.data;
+		console.log("Before body.match " + body)
+		var match = body.match(/<title>([^<]*)<\/title>/i,)
+		// console.log('Match = ' + match[1])
+		returnValue[x[1]] = {
+			title: match != null ? match[1] : x[1],
+			frequency: x[0]
+		}
+	}
+	console.log("Return Value = " + JSON.stringify(returnValue))
 	var endTime = process.hrtime(startTime)
 	console.log('Search results returned in %ds %dms', endTime[0], endTime[1]/1000000);
-	return result
+	return JSON.stringify(returnValue)
 }
 
 module.exports.myFunction = myFunction

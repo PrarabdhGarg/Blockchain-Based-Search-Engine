@@ -1,27 +1,13 @@
-function sortByValue(jsObj){
-    var sortedArray = [];
-    for(var i in jsObj)
-    {
-        console.log(i)
-        console.log(jsObj[i])
-        // Push each JSON Object entry in array by [value, key]
-        sortedArray.push([Number(jsObj[i]), i]);
-    }
-    return sortedArray.sort();
-}
-
 function search(text) {
     console.log(text)
     $.post("/search", {text: text}, function(data) {
         console.log(data)
-        var sortedArray = sortByValue(JSON.parse(data))
-        console.log(sortedArray)
+        var finalData = JSON.parse(data.toString())
+        var keys = Object.keys(finalData)
         ul = $("<ul>")
-        for (let x of sortedArray) {
-            
-                ul.append("<li><a href='" + x[1] + "'>" + x[1] + "</a></li>")
-                console.log("X = " + x[1])
-            
+        for (var i = 0; i < keys.length; i++) {
+            ul.append("<h1><li><a target='_blank' href='" + keys[i] + "'>" + finalData[keys[i]]["title"] + "</a></li></h1>")
+            // console.log("X = " + x[1])
         }
         $('#results').empty()
         $('#results').append(ul)
@@ -30,6 +16,7 @@ function search(text) {
 }
 
 function crawl(url) {
+    alert("Starting to crawl website " + url.toString())
     console.log(url)
     $.post("/crawl", {url: url}, function(data) {
         alert(data)
