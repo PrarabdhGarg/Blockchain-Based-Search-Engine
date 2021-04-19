@@ -1,5 +1,3 @@
-bin
-config
 test-network/.DS_Store
 contract-search/go.sum
 contract-search/vendor/
