@@ -3,7 +3,7 @@
 if ! [[ -d ./bin ]]
 then
     echo "Installing Hyperledger Fabric binaries..."
-    ./bootstrap.sh -s -d
+    ./bootstrap.sh -s
 fi
 docker container kill ipfs_host
 docker container rm ipfs_host
