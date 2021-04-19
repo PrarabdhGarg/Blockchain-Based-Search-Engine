@@ -10,17 +10,17 @@ Older versions of Windows: [Docker Toolbox](https://docs.docker.com/docker-for-w
 
 You can check the version of docker with the following command:
 
-`	`$ docker --version
+	$ docker --version
 
 Make sure that the docker daemon is running
 
-`	 `$ sudo systemctl start docker
+	$ sudo systemctl start docker
 
 Optional: To enable docker daemon on startup
 
-`	`$ sudo systemctl enable docker
+	$ sudo systemctl enable docker
 
-`	`$ sudo usermod -a -G docker <username>
+	$ sudo usermod -a -G docker <username>
 
 Installing Docker for Mac or Windows, or Docker Toolbox will also install Docker Compose. If you already had Docker installed, you should check that you have Docker Compose version 1.14.0 or greater installed. If not, we recommend that you install a more recent version of Docker.
 
@@ -28,13 +28,13 @@ Installing Docker for Mac or Windows, or Docker Toolbox will also install Docker
 
 Run the following commands to configure git settings
 
-$ git config --global core.autocrlf false
+   `$ git config --global core.autocrlf false`
 
-$ git config --global core.longpaths true
+   `$ git config --global core.longpaths true`
 
 1. To get the go sdk for chaincode, run the command
 
-$ go get github.com/hyperledger/fabric-sdk-go
+   `$ go get github.com/hyperledger/fabric-sdk-go`
 
 
 
@@ -52,11 +52,11 @@ $ go get github.com/hyperledger/fabric-sdk-go
 
 1. Navigate to the base directory containing the cloned repository in a terminal
 
-`			`$ cd <path to repo>/Blockchain-Based-Search-Engine
+   `$ cd <path to repo>/Blockchain-Based-Search-Engine`
 
 1. Run the bash script to setup the Fabric Network
 
-$ ./setupNetwork.sh
+   `$ ./setupNetwork.sh`
 
 ![](Aspose.Words.dbd3fc15-0722-4cb7-ad4b-baa8a1db5883.002.png)
 
@@ -64,17 +64,17 @@ $ ./setupNetwork.sh
 1. **Running the Client Application :**
    1. Change to the website directory in the project folder
 
-$ cd ./Search\_Apps/website
+   `$ cd ./Search\_Apps/website`
 
 1. Install Node.js dependencies
 
-$ npm install
+   `$ npm install`
 
 ![](Aspose.Words.dbd3fc15-0722-4cb7-ad4b-baa8a1db5883.003.png)
 
 1. Start the backend server for the GUI
 
-$ npm start
+`$ npm start`
 
 
 ![](Aspose.Words.dbd3fc15-0722-4cb7-ad4b-baa8a1db5883.004.png)
