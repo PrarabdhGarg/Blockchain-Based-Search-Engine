@@ -94,13 +94,13 @@ func (s *SmartContract) ReadWord(ctx contractapi.TransactionContextInterface, id
 		return nil, fmt.Errorf("failed to read from world state: %v", err)
 	}
 	if wordJSON == nil {
-		// return nil, fmt.Errorf("the word %s does not exist", id)
 		// return nil, errors.New("WordNotFound")
 		// word := Word{
 		// 	ID:   id,
 		// 	Path: ' ',
 		// }
 		fmt.Println("Word Doesn't exist ", id)
+		// return nil, fmt.Errorf("the word %s does not exist", id)
 		return nil, nil
 	}
 
@@ -166,6 +166,10 @@ func (s *SmartContract) Lookup(ctx contractapi.TransactionContextInterface, sear
 		fmt.Println("read word done", term)
 
 		if err != nil {
+			continue
+		}
+
+		if(word == nil) {
 			continue
 		}
 

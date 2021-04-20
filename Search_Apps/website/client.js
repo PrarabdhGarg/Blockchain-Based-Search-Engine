@@ -77,6 +77,7 @@ async function myFunction(text) {
 
 	} catch (error) {
 		console.error(`******** FAILED to run the application: ${error}`);
+		return JSON.stringify({error: `Error: ${error}`})
     }
     
     
@@ -99,7 +100,16 @@ async function foo(text) {
     // const searchWord = prompt('Enter search term: ');
     // console.log('Search term entered', searchWord);
 	var startTime = process.hrtime()
-    var result = await smartContract.submitTransaction('Lookup', text.toString())
+	try {
+		var result = await smartContract.submitTransaction('Lookup', text.toString())
+	} catch(e) {
+		console.log("Error while calling smart contract: " + e.toString())
+		if(e.hasOwnProperty('Error') && e['Error'] === 'No valid responses from any peers') {
+			return JSON.stringify({error: 'No valid responses from any peers. Make sure that the blockchain network is up and running'})
+		} else {
+			return JSON.stringify({error: e['Error'].toString()})
+		}
+	}
     console.log('Result from smart contract = ' + result.toString())
 	result = JSON.parse(result.toString())
 	var sortedArray = sortByValue(result)

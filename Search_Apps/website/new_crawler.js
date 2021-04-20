@@ -44,10 +44,10 @@ async function readFileFromIpfs(cid) {
 }
 
 async function myFunctionCrawl(url) {
-	ipfs = await IPFS.create({
-		repo: path.join(homedir, "/IPFS/data/")
-	})
 	try {
+		ipfs = await IPFS.create({
+			repo: path.join(homedir, "/IPFS/data/")
+		})
 		// build an in memory object with the network configuration (also known as a connection profile)
 		const ccp = buildCCPOrg1();
 
@@ -106,6 +106,7 @@ async function myFunctionCrawl(url) {
 
 	} catch (error) {
 		console.error(`******** FAILED to run the application: ${error}`);
+		return `Error: ${error}`
     }
     
     
@@ -115,7 +116,16 @@ async function myFunctionCrawl(url) {
 async function foo(url) {
 
 	var startTime = process.hrtime()
-	const response = await axios.get(url);
+	var response
+	try{
+		response = await axios.get(url);
+	} catch(e) {
+		if(e.toString().includes('getaddrinfo ENOTFOUND')) {
+			return `Error: Please enter a valid URL`
+		} else {
+			return `Error: ${e}`
+		}
+	}
 	// console.log(response)
 	var body = response.data;
 	// console.log("Body = " + body)
@@ -164,7 +174,11 @@ async function foo(url) {
 			var isNew = false;
 			
 			var result
-			result = await smartContract.submitTransaction('ReadWord', key.toString())
+			try {
+				result = await smartContract.submitTransaction('ReadWord', key.toString())
+			} catch(e) {
+				return `Error: ${e}`
+			}
 
 			console.log(result.toString())
 
@@ -176,7 +190,11 @@ async function foo(url) {
 			console.log("isNew = " + isNew)
 			if(!isNew) {
 				console.log('File id for word ' + key.toString() + ' = ' + JSON.parse(result.toString()).path)
-				fileContents = await readFileFromIpfs(JSON.parse(result.toString()).path)
+				try {
+					fileContents = await readFileFromIpfs(JSON.parse(result.toString()).path)
+				} catch(e) {
+					return `Error: ${e}`
+				}
 			}
 			
 			// if(fileContents == '') 
@@ -185,22 +203,27 @@ async function foo(url) {
 			console.log('Old File contents = ' + fileContents)
 			fileContents = fileContents + url + '\t' + value.toString() + '\n'
 			console.log('New File contents = ' + fileContents)
-			const { cid } = await ipfs.add(fileContents)
-			console.log('New Path = ' + cid)
-			if(isNew) {
-				const result = await smartContract.submitTransaction('CreateWord', key, cid)
-				console.log('Result of CreateWord = ' + result.toString())
-			} else {
-				const result = await smartContract.submitTransaction('UpdateWord', key, cid)
-				console.log('Result of UpdateWord = ' + result.toString())
+			try {
+				const { cid } = await ipfs.add(fileContents)
+				console.log('New Path = ' + cid)
+				if(isNew) {
+					const result = await smartContract.submitTransaction('CreateWord', key, cid)
+					console.log('Result of CreateWord = ' + result.toString())
+				} else {
+					const result = await smartContract.submitTransaction('UpdateWord', key, cid)
+					console.log('Result of UpdateWord = ' + result.toString())
+				}
+			} catch(e) {
+				return `Error: ${e}`
 			}
+			
 		}
 	}
 	var endTime = process.hrtime(startTime)
 	console.log('Website crawled sucessfully in %ds %dms', endTime[0], endTime[1]/1000000);
 	console.log('Words = %d', Object.keys(words).length)
 	console.log('Useful = %d', useful)
-	// ipfs.stop();
+	await ipfs.stop();
 	return "Website crawled sucessfully"
 	// gateway.disconnect()
 	
