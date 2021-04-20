@@ -7,3 +7,4 @@ test-network/.gitignore
 Search_Apps/node_modules/
 Search_Apps/website/node_modules
 Statastics.xlsx
+Search_Apps/website/wallet*
