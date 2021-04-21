@@ -28,14 +28,16 @@ Installing Docker for Mac or Windows, or Docker Toolbox will also install Docker
 
 Run the following commands to configure git settings
 
-   `$ git config --global core.autocrlf false`
+```
+   $ git config --global core.autocrlf false
 
-   `$ git config --global core.longpaths true`
+   $ git config --global core.longpaths true
+```
 
 1. To get the go sdk for chaincode, run the command
-
-   `$ go get github.com/hyperledger/fabric-sdk-go`
-
+```
+   $ go get github.com/hyperledger/fabric-sdk-go
+```
 
 
 
@@ -52,30 +54,34 @@ Run the following commands to configure git settings
 
 1. Navigate to the base directory containing the cloned repository in a terminal
 
-   `$ cd <path to repo>/Blockchain-Based-Search-Engine`
+```
+   $ cd <path to repo>/Blockchain-Based-Search-Engine`
+```
 
 1. Run the bash script to setup the Fabric Network
 
-   `$ ./setupNetwork.sh`
+```
+   $ ./setupNetwork.sh
+```
 
 ![](Aspose.Words.dbd3fc15-0722-4cb7-ad4b-baa8a1db5883.002.png)
 
 
 1. **Running the Client Application :**
    1. Change to the website directory in the project folder
-
-   `$ cd ./Search\_Apps/website`
-
+```
+   $ cd ./Search\_Apps/website
+```
 1. Install Node.js dependencies
-
-   `$ npm install`
-
+```
+   $ npm install
+```
 ![](Aspose.Words.dbd3fc15-0722-4cb7-ad4b-baa8a1db5883.003.png)
 
 1. Start the backend server for the GUI
-
-`$ npm start`
-
+```
+$ npm start
+```
 
 ![](Aspose.Words.dbd3fc15-0722-4cb7-ad4b-baa8a1db5883.004.png)
 
