@@ -1,6 +1,6 @@
-﻿## Setup Instructions and Screenshots
+# Setup Instructions and Screenshots
 
-1. **Prerequisites** :
+## Prerequisites :
    1. [Git](https://git-scm.com/downloads)
    1. [cUrl](https://curl.se/download.html)
    1. [Node](https://nodejs.org/en/) version v15.13.0 along with [npm](https://www.npmjs.com/package/npm) v7.7.6
@@ -42,7 +42,7 @@ Run the following commands to configure git settings
 
 
 
-1. **Setup Instructions :**
+## Setup Instructions :
 
 1. Clone the repository from [Github](https://github.com/PrarabdhGarg/Blockchain-Based-Search-Engine).
 
