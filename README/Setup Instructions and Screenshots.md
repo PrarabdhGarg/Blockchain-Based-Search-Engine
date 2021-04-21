@@ -1,30 +1,27 @@
 # Setup Instructions and Screenshots
 
 ## Prerequisites :
-   1. [Git](https://git-scm.com/downloads)
-   1. [cUrl](https://curl.se/download.html)
-   1. [Node](https://nodejs.org/en/) version v15.13.0 along with [npm](https://www.npmjs.com/package/npm) v7.7.6
-   1. MacOSX, \*nix, or Windows 10: [Docker](https://www.docker.com/get-started) Docker version 17.06.2-ce or greater is required.
-
-Older versions of Windows: [Docker Toolbox](https://docs.docker.com/docker-for-windows/docker-toolbox/) - again, Docker version Docker 17.06.2-ce or greater is required.
-
-You can check the version of docker with the following command:
-
+1. [Git](https://git-scm.com/downloads)
+1. [cUrl](https://curl.se/download.html)
+1. [Node](https://nodejs.org/en/) version v15.13.0 along with [npm](https://www.npmjs.com/package/npm) v7.7.6
+1. MacOSX, \*nix, or Windows 10: [Docker](https://www.docker.com/get-started) Docker version 17.06.2-ce or greater is required. 
+      You can check the version of docker with the following command:
+	```
 	$ docker --version
-
-Make sure that the docker daemon is running
-
+	```
+      Make sure that the docker daemon is running
+	```
 	$ sudo systemctl start docker
-
-Optional: To enable docker daemon on startup
-
+	```
+      Optional: To enable docker daemon on startup
+	```
 	$ sudo systemctl enable docker
 
 	$ sudo usermod -a -G docker <username>
+	```
+	Installing Docker for Mac or Windows, or Docker Toolbox will also install Docker Compose. If you already had Docker installed, you should check that you 	have Docker Compose version 1.14.0 or greater installed. If not, we recommend that you install a more recent version of Docker.
 
-Installing Docker for Mac or Windows, or Docker Toolbox will also install Docker Compose. If you already had Docker installed, you should check that you have Docker Compose version 1.14.0 or greater installed. If not, we recommend that you install a more recent version of Docker.
-
-1. (Only for windows users)
+1. (Only for Windows users)
 
 Run the following commands to configure git settings
 
@@ -38,8 +35,6 @@ Run the following commands to configure git settings
 ```
    $ go get github.com/hyperledger/fabric-sdk-go
 ```
-
-
 
 
 ## Setup Instructions :
