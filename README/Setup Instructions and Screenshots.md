@@ -49,39 +49,39 @@
 
 1. Navigate to the base directory containing the cloned repository in a terminal
 
-```
-   $ cd <path to repo>/Blockchain-Based-Search-Engine`
-```
+	```
+	   $ cd <path to repo>/Blockchain-Based-Search-Engine
+	```
 
 1. Run the bash script to setup the Fabric Network
 
-```
-   $ ./setupNetwork.sh
-```
+	```
+	   $ ./setupNetwork.sh
+	```
 
-![](Aspose.Words.dbd3fc15-0722-4cb7-ad4b-baa8a1db5883.002.png)
+	![](Aspose.Words.dbd3fc15-0722-4cb7-ad4b-baa8a1db5883.002.png)
 
 
 ### Running the Client Application :
 
 1. Change to the website directory in the project folder
-```
-   $ cd ./Search\_Apps/website
-```
+	```
+	   $ cd ./Search\_Apps/website
+	```
 1. Install Node.js dependencies
-```
-   $ npm install
-```
+	```
+	   $ npm install
+	```
 
-![](Aspose.Words.dbd3fc15-0722-4cb7-ad4b-baa8a1db5883.003.png)
+	![](Aspose.Words.dbd3fc15-0722-4cb7-ad4b-baa8a1db5883.003.png)
 
 1. Start the backend server for the GUI
 
-```
-$ npm start
-```
+	```
+	$ npm start
+	```
 
-![](Aspose.Words.dbd3fc15-0722-4cb7-ad4b-baa8a1db5883.004.png)
+	![](Aspose.Words.dbd3fc15-0722-4cb7-ad4b-baa8a1db5883.004.png)
 
 
 1. Open localhost:3000 on a web browser to access the GUI
@@ -89,16 +89,13 @@ $ npm start
 ![](Aspose.Words.dbd3fc15-0722-4cb7-ad4b-baa8a1db5883.005.png)
 
 
-
 ## Using the GUI:
 
-1. **Crawling :** Enter the **full URL*** (eg: <http://www.tuhs.org>) of the website to be crawled. A pop-up will appear notifying when the crawling is complete. (Note : Depending on the number of words in the website, it may take quite a long time to finish crawling. You can check the terminal to view the progress of crawling).** 
+1. **Crawling :** Enter the ***full URL*** (eg: <http://www.tuhs.org>) of the website to be crawled. A pop-up will appear notifying when the crawling is complete. (Note : Depending on the number of words in the website, it may take quite a long time to finish crawling. You can check the terminal to view the progress of crawling).
 
-![](Aspose.Words.dbd3fc15-0722-4cb7-ad4b-baa8a1db5883.006.png)
-
-
+	![](Aspose.Words.dbd3fc15-0722-4cb7-ad4b-baa8a1db5883.006.png)
 
 1. **Searching :** Enter the search term and click on the Search button. Results will be displayed when lookup is complete.
 
-![](Aspose.Words.dbd3fc15-0722-4cb7-ad4b-baa8a1db5883.007.png)
+	![](Aspose.Words.dbd3fc15-0722-4cb7-ad4b-baa8a1db5883.007.png)
 
